@@ -3,3 +3,6 @@ build:
   kconfig: Kconfig
   settings:
     board_root: .
+  depends:
+    - zephyr
+    - lvgl
