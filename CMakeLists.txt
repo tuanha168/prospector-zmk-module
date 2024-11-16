@@ -18,7 +18,7 @@ if(CONFIG_SHIELD_PROSPECTOR_ADAPTER)
 
         endif()
 
-        zephyr_library_sources_ifdef(CONFIG_ZMK_SPLIT_ROLE_CENTRAL app PRIVATE src/events/split_central_status_changed.c)
+        zephyr_library_sources_ifdef(CONFIG_ZMK_SPLIT_ROLE_CENTRAL src/events/split_central_status_changed.c)
 
         set_source_files_properties(
                 ${APPLICATION_SOURCE_DIR}/src/split/bluetooth/central.c
