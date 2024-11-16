@@ -5,7 +5,7 @@ zephyr_library()
 if(CONFIG_SHIELD_PROSPECTOR_ADAPTER)
 
         add_subdirectory(${ZEPHYR_CURRENT_MODULE_DIR}/drivers/display)
-        add_subdirectory(${ZEPHYR_CURRENT_MODULE_DIR}/modules/lvgl)
+        add_subdirectory(${ZEPHYR_CURRENT_MODULE_DIR}/lvgl)
 
         zephyr_library_sources_ifdef(CONFIG_ZMK_SPLIT_ROLE_CENTRAL src/events/split_central_status_changed.c)
 
