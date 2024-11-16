@@ -4,7 +4,6 @@ zephyr_library()
 
 if(CONFIG_SHIELD_PROSPECTOR_ADAPTER)
 
-        add_subdirectory(${ZEPHYR_CURRENT_MODULE_DIR}/modules/lvgl)
         add_subdirectory(${ZEPHYR_CURRENT_MODULE_DIR}/drivers/display)
 
         target_sources_ifdef(CONFIG_ZMK_BEHAVIOR_CAPS_WORD app PRIVATE src/events/caps_word_state_changed.c)
