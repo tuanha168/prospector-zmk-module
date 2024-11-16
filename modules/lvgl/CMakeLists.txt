@@ -1,3 +1,4 @@
+find_package(Zephyr)
 zephyr_library_amend()
 set_source_files_properties(
         ${ZEPHYR_BASE}/modules/lvgl/lvgl.c
