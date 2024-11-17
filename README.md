@@ -42,3 +42,6 @@ include:
     shield: [YOUR KEYBOARD SHIELD]_dongle prospector_adapter
     snippet: studio-rpc-usb-uart
 ```
+
+## Configuration
+

@@ -4,14 +4,14 @@
 #include <zephyr/drivers/pwm.h>
 #include <zephyr/drivers/led.h>
 #include <zephyr/sys/printk.h>
-// #include <zephyr/drivers/sensor/apds9960.h>
 
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(als, 4);
 
 static const struct device *pwm_leds_dev = DEVICE_DT_GET_ONE(pwm_leds);
 #define DISP_BL DT_NODE_CHILD_IDX(DT_NODELABEL(disp_bl))
-// static const struct device *bl_dev = DEVICE_DT_GET(DT_NODELABEL(disp_bl));
+
+#ifdef CONFIG_PROSPECTOR_USE_AMBIENT_LIGHT_SENSOR
 
 static uint8_t current_brightness = 100;
 
@@ -89,7 +89,6 @@ extern void als_thread(void *d0, void *d1, void *d2) {
     if (!device_is_ready(dev)) {
         printk("sensor: device not ready.\n");
     }
-    // LOG_INF("Got APDS9960 POGGERS!!!!!");
 
     // led_set_brightness(pwm_leds_dev, DISP_BL, 100);
 
@@ -97,7 +96,6 @@ extern void als_thread(void *d0, void *d1, void *d2) {
 
         k_msleep(NORMAL_SAMPLE_SLEEP_MS);
 
-        // LOG_INF("Reading APDS9960 NOT POG");
 
         if (sensor_sample_fetch(dev)) {
             LOG_ERR("sensor_sample fetch failed\n");
@@ -144,5 +142,17 @@ extern void als_thread(void *d0, void *d1, void *d2) {
     }
 }
 
-K_THREAD_DEFINE(als_tid, 1024, als_thread, NULL, NULL, NULL, K_HIGHEST_APPLICATION_THREAD_PRIO, 0,
+K_THREAD_DEFINE(als_tid, 1024, als_thread, NULL, NULL, NULL, K_LOWEST_APPLICATION_THREAD_PRIO, 0,
                 0);
+
+#else
+
+static int init_fixed_brightness(void) {
+    led_set_brightness(pwm_leds_dev, DISP_BL, CONFIG_PROSPECTOR_FIXED_BRIGHTNESS);
+
+    return 0;
+}
+
+SYS_INIT(init_fixed_brightness, APPLICATION, CONFIG_APPLICATION_INIT_PRIORITY);
+
+#endif
