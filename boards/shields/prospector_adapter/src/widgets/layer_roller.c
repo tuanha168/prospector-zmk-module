@@ -106,18 +106,26 @@ int zmk_widget_layer_roller_init(struct zmk_widget_layer_roller *widget, lv_obj_
                 strcat(ptr, "\n");
                 ptr += strlen(ptr);
             }
+
+            if (layer_name && *layer_name) {
 #if IS_ENABLED(CONFIG_LAYER_ROLLER_ALL_CAPS)
-            // Copy and convert to uppercase character by character
-            while (*layer_name) {
-                *ptr = toupper((unsigned char)*layer_name);
-                ptr++;
-                layer_name++;
-            }
-            *ptr = '\0';  // Null terminate the string
+                while (*layer_name) {
+                    *ptr = toupper((unsigned char)*layer_name);
+                    ptr++;
+                    layer_name++;
+                }
+                *ptr = '\0';
 #else
-            strcat(ptr, layer_name);
-            ptr += strlen(layer_name);
+                strcat(ptr, layer_name);
+                ptr += strlen(layer_name);
 #endif
+            } else {
+                // Just use the number for unnamed layers
+                char index_str[12];
+                snprintf(index_str, sizeof(index_str), "%d", i);
+                strcat(ptr, index_str);
+                ptr += strlen(index_str);
+            }
         }
     }
 
