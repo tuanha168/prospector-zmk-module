@@ -49,15 +49,13 @@ For split keyboards, since the peripheral battery widget uses the order in which
 The layer roller shows layers' `display-name` property whenever available, and will fall back to the layer index otherwise. To add a `display-name` property to a keymap layer:
 
 ```dts
-/ {
-  keymap {
-    compatible = "zmk,keymap";
-    base {
-      display-name = "Base";           # <--- add this
-      bindings = <
-        ...
-      >;
-    }
+keymap {
+  compatible = "zmk,keymap";
+  base {
+    display-name = "Base";           # <--- add this
+    bindings = <
+      ...
+    >;
   }
 }
 ```
