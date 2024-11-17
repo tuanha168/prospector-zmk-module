@@ -5,7 +5,7 @@ All the necessary stuff for [Prospector](https://github.com/carrefinho/prospecto
 ## Features
 
 - Highest active layer roller
-- Peripheral battery
+- Peripheral battery bar
 - Peripheral connection status
 - Caps word indicator
 
@@ -42,6 +42,8 @@ include:
   - board: seeeduino_xiao_ble
     shield: [YOUR KEYBOARD SHIELD]_dongle prospector_adapter
 ```
+
+For building locally, see [Building With External Modules in ZMK docs.](https://zmk.dev/docs/development/local-toolchain/build-flash#building-with-external-modules)
 
 ## Usage
 
