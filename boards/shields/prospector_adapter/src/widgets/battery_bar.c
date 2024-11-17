@@ -31,9 +31,11 @@ static void set_battery_bar_value(lv_obj_t *widget, struct battery_state state) 
     if (initialized) {
         lv_obj_t *info_container = lv_obj_get_child(widget, state.source);
         lv_obj_t *bar = lv_obj_get_child(info_container, 0);
+        lv_obj_t *num = lv_obj_get_child(info_container, 1);
+
         lv_bar_set_value(bar, state.level, LV_ANIM_ON);
-        lv_obj_t *num = lv_obj_get_child(info_container, 2);
         lv_label_set_text_fmt(num, "%d", state.level);
+
         if (state.level < 20) {
             lv_obj_set_style_bg_color(bar, lv_color_hex(0xD3900F), LV_PART_INDICATOR);
             lv_obj_set_style_bg_grad_color(bar, lv_color_hex(0xE8AC11), LV_PART_INDICATOR);
@@ -52,16 +54,23 @@ static void set_battery_bar_connected(lv_obj_t *widget, struct battery_state sta
     if (initialized) {
         lv_obj_t *info_container = lv_obj_get_child(widget, state.source);
         lv_obj_t *bar = lv_obj_get_child(info_container, 0);
-        lv_obj_t *nc_container = lv_obj_get_child(info_container, 1);
+        lv_obj_t *num = lv_obj_get_child(info_container, 1);
+        lv_obj_t *nc_bar = lv_obj_get_child(info_container, 2);
+        lv_obj_t *nc_num = lv_obj_get_child(info_container, 3);
+
         LOG_DBG("Peripheral %d %s\n", state.source,
                 state.peripheral_connected ? "connected" : "disconnected");
 
         if (state.peripheral_connected) {
-            lv_obj_fade_out(nc_container, 150, 0);
+            lv_obj_fade_out(nc_bar, 150, 0);
+            lv_obj_fade_out(nc_num, 150, 0);
             lv_obj_fade_in(bar, 150, 250);
+            lv_obj_fade_in(num, 150, 250);
         } else {
             lv_obj_fade_out(bar, 150, 0);
-            lv_obj_fade_in(nc_container, 150, 250);
+            lv_obj_fade_out(num, 150, 0);
+            lv_obj_fade_in(nc_bar, 150, 250);
+            lv_obj_fade_in(nc_num, 150, 250);
         }
     }
 }
@@ -128,8 +137,6 @@ int zmk_widget_battery_bar_init(struct zmk_widget_battery_bar *widget, lv_obj_t 
         lv_obj_set_height(info_container, lv_pct(100));
         lv_obj_set_flex_grow(info_container, 1);
 
-        // lv_obj_add_flag(info_container, LV_OBJ_FLAG_OVERFLOW_VISIBLE);
-
         lv_obj_t *bar = lv_bar_create(info_container);
         lv_obj_set_size(bar, lv_pct(100), 4);
         lv_obj_align(bar, LV_ALIGN_BOTTOM_MID, 0, 0);
@@ -137,50 +144,38 @@ int zmk_widget_battery_bar_init(struct zmk_widget_battery_bar *widget, lv_obj_t 
         lv_obj_set_style_bg_opa(bar, 255, LV_PART_MAIN);
         lv_obj_set_style_radius(bar, 1, LV_PART_MAIN);
         lv_obj_set_style_bg_color(bar, lv_color_hex(0x909090), LV_PART_INDICATOR);
+        lv_obj_set_style_bg_opa(bar, 255, LV_PART_INDICATOR);
         lv_obj_set_style_bg_grad_color(bar, lv_color_hex(0xf0f0f0), LV_PART_INDICATOR);
         lv_obj_set_style_bg_dither_mode(bar, LV_DITHER_ERR_DIFF, LV_PART_INDICATOR);
         lv_obj_set_style_bg_grad_dir(bar, LV_GRAD_DIR_HOR, LV_PART_INDICATOR);
-        lv_obj_set_style_bg_opa(bar, 255, LV_PART_INDICATOR);
         lv_obj_set_style_radius(bar, 1, LV_PART_INDICATOR);
         lv_obj_set_style_anim_time(bar, 250, 0);
-        // lv_obj_set_style_anim_speed(bar, 5, LV_PART_INDICATOR);
+
         lv_bar_set_value(bar, 0, LV_ANIM_OFF);
-        lv_obj_set_style_opa(bar, 0, 0);
-
-        // lv_obj_add_flag(bar, LV_OBJ_FLAG_OVERFLOW_VISIBLE);
-
-        lv_obj_t *nc_container = lv_obj_create(info_container);
-        lv_obj_center(nc_container);
-        lv_obj_set_size(nc_container, lv_pct(100), lv_pct(100));
-        lv_obj_set_style_opa(nc_container, 255, 0);
-
-        lv_obj_t *xmark = lv_label_create(nc_container);
-        lv_label_set_text_static(xmark, LV_SYMBOL_CLOSE);
-        lv_obj_center(xmark);
-        lv_obj_set_style_text_color(xmark, lv_color_hex(0xe63030), LV_PART_MAIN);
-
-        lv_obj_t *xmark_left_line = lv_obj_create(nc_container);
-        lv_obj_align(xmark_left_line, LV_ALIGN_LEFT_MID, 0, 0);
-        lv_obj_set_size(xmark_left_line, lv_pct(42), lv_pct(30));
-        lv_obj_set_style_bg_color(xmark_left_line, lv_color_hex(0xe63030), LV_PART_MAIN);
-        lv_obj_set_style_bg_opa(xmark_left_line, 255, LV_PART_MAIN);
-        lv_obj_set_style_radius(xmark_left_line, 2, LV_PART_MAIN);
-
-        lv_obj_t *xmark_right_line = lv_obj_create(nc_container);
-        lv_obj_align(xmark_right_line, LV_ALIGN_RIGHT_MID, 0, 0);
-        lv_obj_set_size(xmark_right_line, lv_pct(42), lv_pct(30));
-        lv_obj_set_style_bg_color(xmark_right_line, lv_color_hex(0xe63030), LV_PART_MAIN);
-        lv_obj_set_style_bg_opa(xmark_right_line, 255, LV_PART_MAIN);
-        lv_obj_set_style_radius(xmark_right_line, 2, LV_PART_MAIN);
+        lv_obj_set_style_opa(bar, 0, LV_PART_MAIN);
+        lv_obj_set_style_opa(bar, 255, LV_PART_INDICATOR);
 
         lv_obj_t *num = lv_label_create(info_container);
         lv_obj_set_style_text_font(num, &FoundryGridnikMedium_20, 0);
         lv_obj_set_style_text_color(num, lv_color_white(), 0);
-        lv_obj_set_style_text_opa(num, 255, 0);
         lv_obj_set_style_opa(num, 255, 0);
-        // lv_obj_center(num);
         lv_obj_align(num, LV_ALIGN_CENTER, 0, 0);
-        lv_label_set_text(num, "69");
+        lv_label_set_text(num, "N/A");
+
+        lv_obj_set_style_opa(num, 0, 0);
+
+        lv_obj_t *nc_bar = lv_obj_create(info_container);
+        lv_obj_set_size(nc_bar, lv_pct(100), 4);
+        lv_obj_align(nc_bar, LV_ALIGN_BOTTOM_MID, 0, 0);
+        lv_obj_set_style_bg_color(nc_bar, lv_color_hex(0x9e2121), LV_PART_MAIN);
+        lv_obj_set_style_radius(nc_bar, 1, LV_PART_MAIN);
+        lv_obj_set_style_bg_opa(nc_bar, 255, 0);
+
+        lv_obj_t *nc_num = lv_label_create(info_container);
+        lv_obj_set_style_text_color(nc_num, lv_color_hex(0xe63030), 0);
+        lv_obj_align(nc_num, LV_ALIGN_CENTER, 0, 0);
+        lv_label_set_text(nc_num, LV_SYMBOL_CLOSE);
+        lv_obj_set_style_opa(nc_num, 255, 0);
     }
 
     sys_slist_append(&widgets, &widget->node);

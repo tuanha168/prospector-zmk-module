@@ -51,7 +51,7 @@ int zmk_widget_caps_word_indicator_init(struct zmk_widget_caps_word_indicator *w
     // LV_FONT_DECLARE(SF_Compact_Text_Bold_32);
 
     lv_label_set_text(widget->obj, SF_SYMBOL_CHARACTER_CURSOR_IBEAM);
-    lv_obj_set_style_text_color(widget->obj, lv_color_hex(0x202020), LV_PART_MAIN);
+    lv_obj_set_style_text_color(widget->obj, lv_color_hex(0x030303), LV_PART_MAIN);
     lv_obj_set_style_text_font(widget->obj, &SF_Compact_Text_Bold_32, LV_PART_MAIN);
     lv_obj_set_style_text_align(widget->obj, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN);
 

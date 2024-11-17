@@ -10,16 +10,29 @@ choice ZMK_DISPLAY_STATUS_SCREEN
     default ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
 endchoice
 
+config ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
+    select LV_USE_LABEL
+    select LV_USE_BAR
+    select LV_USE_FLEX
+    select LV_USE_ROLLER
+    select LV_COLOR_SCREEN_TRANSP
+
 choice ZMK_DISPLAY_WORK_QUEUE
     default ZMK_DISPLAY_WORK_QUEUE_DEDICATED
 endchoice
+
+config ZMK_DISPLAY_DEDICATED_THREAD_STACK_SIZE
+    default 4096
 
 choice ST7789V_PIXEL_FORMAT
 	default ST7789V_RGB565
 endchoice
 
-# config LV_Z_VDB_SIZE
-#     default 50
+config LV_Z_VDB_SIZE
+    default 100
+
+config LV_Z_MEM_POOL_SIZE
+    default 10000
 
 config LV_DPI_DEF
     default 261
@@ -33,5 +46,18 @@ endchoice
 
 config LV_COLOR_16_SWAP
 	default y
+
+config LV_DISP_DEF_REFR_PERIOD
+    default 20
+
+choice LV_FONT_DEFAULT
+    default LV_FONT_DEFAULT_MONTSERRAT_20
+endchoice
+
+config PROSPECTOR_USE_AMBIENT_LIGHT_SENSOR
+    select SENSOR
+    select APDS9960
+    select PWM
+    select LED
 
 endif

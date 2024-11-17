@@ -7,6 +7,7 @@ All the necessary stuff for [Prospector](https://github.com/carrefinho/prospecto
 - Highest active layer roller
 - Peripheral battery
 - Peripheral connection status
+- Caps word indicator
 
 ## Installation
 
@@ -44,7 +45,7 @@ include:
 
 ## Usage
 
-For split keyboards, since the peripheral battery widget uses the order in which peripherals were paired to arrange the sub-widgets, after flashing the dongle, pair the left side first and then the right side. With more than two peripherals, pair them in a left to right order.
+For split keyboards, since the peripheral battery widget uses the order in which peripherals were paired to arrange the sub-widgets, after flashing the dongle, pair the left side first and then the right side. For more than two peripherals, pair them in a left to right order.
 
 The layer roller shows layers' `display-name` property whenever available, and will fall back to the layer index otherwise. To add a `display-name` property to a keymap layer:
 

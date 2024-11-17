@@ -9,6 +9,16 @@ if(CONFIG_SHIELD_PROSPECTOR_ADAPTER)
 
         zephyr_library_sources_ifdef(CONFIG_ZMK_SPLIT_ROLE_CENTRAL src/events/split_central_status_changed.c)
 
+        if(CONFIG_DT_HAS_ZMK_BEHAVIOR_CAPS_WORD_ENABLED)
+                zephyr_library_sources(src/events/caps_word_state_changed.c)
+                set_source_files_properties(
+                        ${APPLICATION_SOURCE_DIR}/src/behaviors/behavior_caps_word.c
+                        TARGET_DIRECTORY app
+                        PROPERTIES HEADER_FILE_ONLY ON)
+                zephyr_library_sources(src/behaviors/behavior_caps_word.c)
+        endif()
+
+        zephyr_library_sources(src/events/split_central_status_changed.c)
         set_source_files_properties(
                 ${APPLICATION_SOURCE_DIR}/src/split/bluetooth/central.c
                 TARGET_DIRECTORY app
@@ -16,5 +26,3 @@ if(CONFIG_SHIELD_PROSPECTOR_ADAPTER)
         zephyr_library_sources(src/split/bluetooth/central.c)
 
 endif()
-
-
