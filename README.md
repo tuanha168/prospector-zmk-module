@@ -63,3 +63,16 @@ keymap {
 
 ## Configuration
 
+To customize, add config options to your `config/[YOUR KEYBOARD SHIELD].conf` like so:
+```ini
+CONFIG_PROSPECTOR_USE_AMBIENT_LIGHT_SENSOR=n
+CONFIG_PROSPECTOR_FIXED_BRIGHTESS=80
+```
+
+### Available config options:
+| Name                                              | Description                                                               | Default      |
+| ------------------------------------------------- | --------------------------------------------------------------------------| ------------ |
+| `CONFIG_PROSPECTOR_USE_AMBIENT_LIGHT_SENSOR`      | Use ambient light sensor for auto brightness, set to `n` if building without one                              | y            |
+| `CONFIG_PROSPECTOR_FIXED_BRIGHTESS`               | Set fixed display brightess when not using ambient light sensor           | 50 (1-100)   |
+| `CONFIG_PROSPECTOR_PROSPECTOR_ROTATE_DISPLAY_180` | Rotate the display 180 degrees                                            | n            |
+| `CONFIG_PROSPECTOR_LAYER_ROLLER_ALL_CAPS`         | Convert layer names to all caps                                           | n            |

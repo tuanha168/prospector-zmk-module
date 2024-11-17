@@ -2,6 +2,10 @@ config PROSPECTOR_LAYER_ROLLER_ALL_CAPS
     bool "Convert layer names to all caps"
     default n
 
+config PROSPECTOR_ROTATE_DISPLAY_180
+    bool "Rotate the display 180 degrees"
+    default n
+
 config PROSPECTOR_USE_AMBIENT_LIGHT_SENSOR
     bool "Use ambient light sensor for auto brightness"
     default y
