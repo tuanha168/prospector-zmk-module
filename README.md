@@ -43,5 +43,22 @@ include:
     snippet: studio-rpc-usb-uart
 ```
 
+The layer roller shows layers' `display-name` property whenever available, and will fall back to the layer index otherwise. To add a `display-name` property to a keymap layer:
+
+```
+/ {
+  keymap {
+    compatible = "zmk,keymap";
+
+    base {
+      display-name = "Base";           # <--- add this
+      bindings = <
+        ...
+      >/
+    }
+  }
+}
+```
+
 ## Configuration
 
