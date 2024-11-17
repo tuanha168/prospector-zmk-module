@@ -1,3 +1,4 @@
+name: prosepector-zmk-module
 build:
   cmake: .
   kconfig: Kconfig
