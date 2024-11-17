@@ -43,7 +43,7 @@ include:
     shield: [YOUR KEYBOARD SHIELD]_dongle prospector_adapter
 ```
 
-For building locally, see [Building With External Modules in ZMK docs.](https://zmk.dev/docs/development/local-toolchain/build-flash#building-with-external-modules)
+For more information on ZMK Modules and building locally, see [the ZMK docs page on modules.](https://zmk.dev/docs/features/modules)
 
 ## Usage
 
