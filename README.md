@@ -8,7 +8,7 @@ All the necessary stuff for Prospector to display things with ZMK. Currently fun
 - Peripheral battery
 - Peripheral connection status
 
-## Usage
+## Installation
 
 Your ZMK keyboard should be set up with a dongle as central.
 
@@ -42,6 +42,10 @@ include:
     shield: [YOUR KEYBOARD SHIELD]_dongle prospector_adapter
     snippet: studio-rpc-usb-uart
 ```
+
+## Usage
+
+For split keyboards, since the peripheral battery widget uses the order in which peripherals were paired to arrange the sub-widgets, after flashing the dongle, pair the left side first and then the right side. With more than two peripherals, pair them in a left to right order.
 
 The layer roller shows layers' `display-name` property whenever available, and will fall back to the layer index otherwise. To add a `display-name` property to a keymap layer:
 
