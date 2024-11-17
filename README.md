@@ -1,6 +1,6 @@
 # Prospector ZMK Module
 
-All the necessary stuff for Prospector to display things with ZMK. Currently functional albeit barebones.
+All the necessary stuff for [Prospector](https://github.com/carrefinho/prospector) to display things with ZMK. Currently functional albeit barebones.
 
 ## Features
 
