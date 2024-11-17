@@ -40,7 +40,6 @@ Then add the `prospector_adapter` shield to the dongle in your `build.yaml`:
 include:
   - board: seeeduino_xiao_ble
     shield: [YOUR KEYBOARD SHIELD]_dongle prospector_adapter
-    snippet: studio-rpc-usb-uart
 ```
 
 ## Usage
