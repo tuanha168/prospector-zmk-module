@@ -14,7 +14,7 @@ Your ZMK keyboard should be set up with a dongle as central.
 
 Add this module to your `config/west.yml` with these new entries under `remotes` and `projects`:
 
-```
+```yaml
 manifest:
   remotes:
     - name: zmkfirmware
@@ -35,7 +35,7 @@ manifest:
 
 Then add the `prospector_adapter` shield to the dongle in your `build.yaml`:
 
-```
+```yaml
 ---
 include:
   - board: seeeduino_xiao_ble
@@ -48,7 +48,7 @@ For split keyboards, since the peripheral battery widget uses the order in which
 
 The layer roller shows layers' `display-name` property whenever available, and will fall back to the layer index otherwise. To add a `display-name` property to a keymap layer:
 
-```
+```dts
 keymap {
   compatible = "zmk,keymap";
   base {
