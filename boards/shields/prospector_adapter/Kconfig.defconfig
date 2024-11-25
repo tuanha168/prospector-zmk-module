@@ -54,10 +54,14 @@ choice LV_FONT_DEFAULT
     default LV_FONT_DEFAULT_MONTSERRAT_20
 endchoice
 
+config PWM
+    default y
+
+config LED
+    default y
+
 config PROSPECTOR_USE_AMBIENT_LIGHT_SENSOR
     select SENSOR
     select APDS9960
-    select PWM
-    select LED
 
 endif
