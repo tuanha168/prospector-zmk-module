@@ -65,3 +65,7 @@ config PROSPECTOR_USE_AMBIENT_LIGHT_SENSOR
     select APDS9960
 
 endif
+
+config ZMK_SPLIT_BLE_PERIPHERAL_COUNT
+    int "Number of BLE peripherals"
+    default 2
