@@ -18,9 +18,6 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 #include <zmk/ble.h>
 
-#include <zmk/split/bluetooth/uuid.h>
-#include <zmk/split/bluetooth/service.h>
-
 #include <zmk/events/split_central_status_changed.h>
 
 enum psptr_peripheral_slot_state {
@@ -86,7 +83,7 @@ static int reserve_psptr_peripheral_slot_for_conn(struct bt_conn *conn) {
         }
     }
 #else
-    int i = zmk_ble_put_peripheral_addr(bt_conn_get_dst(conn));
+    int i = zmk_ble_store_peripheral(bt_conn_get_dst(conn));
     if (i >= 0) {
         if (peripherals[i].state == PERIPHERAL_SLOT_STATE_OPEN) {
             // Be sure the slot is fully reinitialized.
@@ -122,11 +119,17 @@ static void split_central_process_connection(struct bt_conn *conn) {
     }
 
     struct bt_conn_info info;
+    struct bt_conn_le_phy_info phy_info; 
 
     bt_conn_get_info(conn, &info);
 
-    LOG_DBG("New connection params: Interval: %d, Latency: %d, PHY: %d", info.le.interval,
-            info.le.latency, info.le.phy->rx_phy);
+    if (!bt_conn_get_phy(conn, &phy_info)) {
+        LOG_DBG("New connection params: Interval: %d, Latency: %d, PHY: %d",
+                info.le.interval, info.le.latency, phy_info.rx_phy);
+    } else {
+        LOG_DBG("New connection params: Interval: %d, Latency: %d, PHY: unknown",
+                info.le.interval, info.le.latency);
+    }
 
     raise_zmk_split_central_status_changed((struct zmk_split_central_status_changed){
         .slot = peripheral_slot_index_for_conn(conn),
