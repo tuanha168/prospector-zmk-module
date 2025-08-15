@@ -18,6 +18,11 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 #include <zmk/ble.h>
 #include <zmk/events/split_central_status_changed.h>
+#include <zmk/ble.h>
+#include <zmk/keys.h>
+#include <zmk/split/bluetooth/uuid.h>
+#include <zmk/event_manager.h>
+#include <zmk/events/ble_active_profile_changed.h>
 
 enum psptr_peripheral_slot_state {
     PERIPHERAL_SLOT_STATE_OPEN,
