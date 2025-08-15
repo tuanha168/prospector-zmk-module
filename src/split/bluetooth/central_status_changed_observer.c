@@ -17,7 +17,6 @@
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 #include <zmk/ble.h>
-#include <zmk/split/bluetooth/central.h>
 #include <zmk/events/split_central_status_changed.h>
 
 enum psptr_peripheral_slot_state {
