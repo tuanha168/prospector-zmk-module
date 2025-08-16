@@ -16,13 +16,28 @@
 
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
+#include <zmk/stdlib.h>
+#include <zmk/behavior.h>
+#include <zmk/sensors.h>
+#include <zmk/split/transport/central.h>
+#include <zmk/split/bluetooth/service.h>
+#include <zmk/events/position_state_changed.h>
+#include <zmk/events/sensor_event.h>
+#include <zmk/events/battery_state_changed.h>
+#include <zmk/pointing/input_split.h>
+#include <zmk/hid_indicators_types.h>
+#include <zmk/physical_layouts.h>
 #include <zmk/ble.h>
 #include <zmk/events/split_central_status_changed.h>
-#include <zmk/ble.h>
 #include <zmk/keys.h>
 #include <zmk/split/bluetooth/uuid.h>
 #include <zmk/event_manager.h>
 #include <zmk/events/ble_active_profile_changed.h>
+
+#include <zephyr/bluetooth/uuid.h>
+#include <zephyr/bluetooth/gatt.h>
+#include <zephyr/settings/settings.h>
+
 
 enum psptr_peripheral_slot_state {
     PERIPHERAL_SLOT_STATE_OPEN,
