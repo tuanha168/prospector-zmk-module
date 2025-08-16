@@ -39,7 +39,7 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 #include <zephyr/settings/settings.h>
 
 int zmk_ble_put_peripheral_addr(const bt_addr_le_t *addr) {
-    for (int i = 0; i < ZMK_SPLIT_BLE_PERIPHERAL_COUNT; i++) {
+    for (int i = 0; i < CONFIG_ZMK_SPLIT_BLE_PERIPHERAL_COUNT; i++) {
         // If the address is recognized and already stored in settings, return
         // index and no additional action is necessary.
         if (bt_addr_le_cmp(&peripheral_addrs[i], addr) == 0) {
