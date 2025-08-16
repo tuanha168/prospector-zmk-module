@@ -60,6 +60,20 @@ int zmk_ble_put_peripheral_addr(const bt_addr_le_t *addr) {
             LOG_DBG("Storing peripheral %s in slot %d", addr_str, i);
             bt_addr_le_copy(&peripheral_addrs[i], addr);
 
+#if IS_ENABLED(CONFIG_SETTINGS)
+            char setting_name[32];
+            sprintf(setting_name, "ble/peripheral_addresses/%d", i);
+            settings_save_one(setting_name, addr, sizeof(bt_addr_le_t));
+#endif // IS_ENABLED(CONFIG_SETTINGS)
+            return i;
+        }
+    }
+
+    // The peripheral does not match a known peripheral and there is no
+    // available slot.
+    return -ENOMEM;
+}
+
 enum psptr_peripheral_slot_state {
     PERIPHERAL_SLOT_STATE_OPEN,
     PERIPHERAL_SLOT_STATE_CONNECTING,
