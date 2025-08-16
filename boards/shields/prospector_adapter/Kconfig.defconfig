@@ -46,8 +46,7 @@ choice LV_COLOR_DEPTH
 endchoice
 
 config LV_COLOR_16_SWAP
-    depends on LV_COLOR_DEPTH_16
-    default y
+    default n
 
 config LV_DISP_DEF_REFR_PERIOD
     default 20
