@@ -4,7 +4,7 @@ config ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING
     default y
 
 config ZMK_DISPLAY
-    default y
+   default y
 
 choice ZMK_DISPLAY_STATUS_SCREEN
     default ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
@@ -25,7 +25,7 @@ config ZMK_DISPLAY_DEDICATED_THREAD_STACK_SIZE
     default 4096
 
 choice ST7789V_PIXEL_FORMAT
-    default ST7789V_RGB565
+	default ST7789V_RGB565
 endchoice
 
 config LV_Z_VDB_SIZE
@@ -38,15 +38,14 @@ config LV_DPI_DEF
     default 261
 
 config LV_Z_BITS_PER_PIXEL
-    default 16
+	default 16
 
-# Set the LVGL color depth choice to 16-bit
 choice LV_COLOR_DEPTH
-    default LV_COLOR_DEPTH_16
+	default LV_COLOR_DEPTH_16
 endchoice
 
 config LV_COLOR_16_SWAP
-    default n
+	default y
 
 config LV_DISP_DEF_REFR_PERIOD
     default 20
