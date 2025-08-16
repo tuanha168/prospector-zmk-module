@@ -11,7 +11,7 @@
 #include <zephyr/bluetooth/conn.h>
 #include <zephyr/bluetooth/hci.h>
 #include <zephyr/sys/byteorder.h>
-
+#include <zephyr/bluetooth/addr.h>
 #include <zephyr/logging/log.h>
 
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
@@ -31,50 +31,13 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 #include <zmk/events/split_central_status_changed.h>
 #include <zmk/keys.h>
 #include <zmk/split/bluetooth/uuid.h>
+#include <zmk/split/bluetooth/central.h>
 #include <zmk/event_manager.h>
 #include <zmk/events/ble_active_profile_changed.h>
 
 #include <zephyr/bluetooth/uuid.h>
 #include <zephyr/bluetooth/gatt.h>
 #include <zephyr/settings/settings.h>
-
-static bt_addr_le_t peripheral_addrs[CONFIG_ZMK_SPLIT_BLE_PERIPHERAL_COUNT];
-
-int zmk_ble_put_peripheral_addr(const bt_addr_le_t *addr) {
-    for (int i = 0; i < CONFIG_ZMK_SPLIT_BLE_PERIPHERAL_COUNT; i++) {
-        // If the address is recognized and already stored in settings, return
-        // index and no additional action is necessary.
-        if (bt_addr_le_cmp(&peripheral_addrs[i], addr) == 0) {
-            LOG_DBG("Found existing peripheral address in slot %d", i);
-            return i;
-        } else {
-            char addr_str[BT_ADDR_LE_STR_LEN];
-            bt_addr_le_to_str(&peripheral_addrs[i], addr_str, sizeof(addr_str));
-            LOG_DBG("peripheral slot %d occupied by %s", i, addr_str);
-        }
-
-        // If the peripheral address slot is open, store new peripheral in the
-        // slot and return index. This compares against BT_ADDR_LE_ANY as that
-        // is the zero value.
-        if (bt_addr_le_cmp(&peripheral_addrs[i], BT_ADDR_LE_ANY) == 0) {
-            char addr_str[BT_ADDR_LE_STR_LEN];
-            bt_addr_le_to_str(addr, addr_str, sizeof(addr_str));
-            LOG_DBG("Storing peripheral %s in slot %d", addr_str, i);
-            bt_addr_le_copy(&peripheral_addrs[i], addr);
-
-#if IS_ENABLED(CONFIG_SETTINGS)
-            char setting_name[32];
-            sprintf(setting_name, "ble/peripheral_addresses/%d", i);
-            settings_save_one(setting_name, addr, sizeof(bt_addr_le_t));
-#endif // IS_ENABLED(CONFIG_SETTINGS)
-            return i;
-        }
-    }
-
-    // The peripheral does not match a known peripheral and there is no
-    // available slot.
-    return -ENOMEM;
-}
 
 enum psptr_peripheral_slot_state {
     PERIPHERAL_SLOT_STATE_OPEN,
