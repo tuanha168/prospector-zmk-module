@@ -129,7 +129,7 @@ void release_peripheral_input_subs(struct bt_conn *conn) {
 
 #endif // IS_ENABLED(CONFIG_ZMK_INPUT_SPLIT)
 
-static struct peripheral_slot peripherals[ZMK_SPLIT_BLE_PERIPHERAL_COUNT];
+static struct peripheral_slot peripherals[CONFIG_ZMK_SPLIT_BLE_PERIPHERAL_COUNT];
 
 static bool is_scanning = false;
 
@@ -149,7 +149,7 @@ void peripheral_event_work_callback(struct k_work *work) {
 K_WORK_DEFINE(peripheral_event_work, peripheral_event_work_callback);
 
 int peripheral_slot_index_for_conn(struct bt_conn *conn) {
-    for (int i = 0; i < ZMK_SPLIT_BLE_PERIPHERAL_COUNT; i++) {
+    for (int i = 0; i < CONFIG_ZMK_SPLIT_BLE_PERIPHERAL_COUNT; i++) {
         if (peripherals[i].conn == conn) {
             return i;
         }
@@ -168,7 +168,7 @@ struct peripheral_slot *peripheral_slot_for_conn(struct bt_conn *conn) {
 }
 
 int release_peripheral_slot(int index) {
-    if (index < 0 || index >= ZMK_SPLIT_BLE_PERIPHERAL_COUNT) {
+    if (index < 0 || index >= CONFIG_ZMK_SPLIT_BLE_PERIPHERAL_COUNT) {
         return -EINVAL;
     }
 
@@ -402,7 +402,7 @@ static uint8_t split_central_notify_func(struct bt_conn *conn,
 
 #if IS_ENABLED(CONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING)
 
-static uint8_t peripheral_battery_levels[ZMK_SPLIT_BLE_PERIPHERAL_COUNT] = {0};
+static uint8_t peripheral_battery_levels[CONFIG_ZMK_SPLIT_BLE_PERIPHERAL_COUNT] = {0};
 
 int zmk_split_get_peripheral_battery_level(uint8_t source, uint8_t *level) {
     if (source >= ARRAY_SIZE(peripheral_battery_levels)) {
@@ -550,7 +550,7 @@ static int update_peripheral_selected_layout(struct peripheral_slot *slot, uint8
 
 static void update_peripherals_selected_physical_layout(struct k_work *_work) {
     uint8_t layout_idx = zmk_physical_layouts_get_selected();
-    for (int i = 0; i < ZMK_SPLIT_BLE_PERIPHERAL_COUNT; i++) {
+    for (int i = 0; i < CONFIG_ZMK_SPLIT_BLE_PERIPHERAL_COUNT; i++) {
         if (peripherals[i].state != PERIPHERAL_SLOT_STATE_CONNECTED) {
             continue;
         }
@@ -1125,7 +1125,7 @@ static zmk_hid_indicators_t hid_indicators = 0;
 
 static void split_central_update_indicators_callback(struct k_work *work) {
     zmk_hid_indicators_t indicators = hid_indicators;
-    for (int i = 0; i < ZMK_SPLIT_BLE_PERIPHERAL_COUNT; i++) {
+    for (int i = 0; i < CONFIG_ZMK_SPLIT_BLE_PERIPHERAL_COUNT; i++) {
         if (peripherals[i].state != PERIPHERAL_SLOT_STATE_CONNECTED) {
             continue;
         }
