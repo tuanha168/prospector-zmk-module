@@ -38,6 +38,8 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 #include <zephyr/bluetooth/gatt.h>
 #include <zephyr/settings/settings.h>
 
+static bt_addr_le_t peripheral_addrs[ZMK_SPLIT_BLE_PERIPHERAL_COUNT];
+
 int zmk_ble_put_peripheral_addr(const bt_addr_le_t *addr) {
     for (int i = 0; i < CONFIG_ZMK_SPLIT_BLE_PERIPHERAL_COUNT; i++) {
         // If the address is recognized and already stored in settings, return
