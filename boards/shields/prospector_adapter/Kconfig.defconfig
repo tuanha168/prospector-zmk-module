@@ -40,11 +40,10 @@ config LV_DPI_DEF
 config LV_Z_BITS_PER_PIXEL
     default 16
 
-# Force 16-bit color depth (symbol from upstream LVGL choice)
-config LV_COLOR_DEPTH_16
-    default y
-
-# (Remove the local 'choice LV_COLOR_DEPTH' block you had; it can shadow the real one)
+# Set the LVGL color depth choice to 16-bit
+choice LV_COLOR_DEPTH
+    default LV_COLOR_DEPTH_16
+endchoice
 
 config LV_COLOR_16_SWAP
     depends on LV_COLOR_DEPTH_16
